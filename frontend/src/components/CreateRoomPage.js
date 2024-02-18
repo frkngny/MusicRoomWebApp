@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const CreateRoomPage = () => {
     const params = useParams();
+    
     const [state, setState] = useState({
         votesToSkip: 2,
         guestCanPause: false,
@@ -40,6 +41,14 @@ const CreateRoomPage = () => {
         };
 
         fetch('/api/create-room', requestOptions).then((resp) => resp.json()).then((data) => navigate("/room/" + data.code));
+    }
+
+    const renderBackButton = () => {
+        return (
+        <Grid item xs={12}>
+            <Button color="grey" variant="contained" to="/" component={Link}>Back</Button>
+        </Grid>
+        );
     }
 
     return (<Grid container spacing={2} align="center">
@@ -70,11 +79,10 @@ const CreateRoomPage = () => {
             </FormControl>
         </Grid>
         <Grid item xs={12}>
-            <Button color="primary" variant="contained" onClick={handleRoomButtonPressed}>Create A Room</Button>
+            <Button color="primary" variant="contained" onClick={() => handleRoomButtonPressed()}>Create A Room</Button>
         </Grid>
-        <Grid item xs={12}>
-            <Button color="grey" variant="contained" to="/" component={Link}>Back</Button>
-        </Grid>
+        {params.update ? null : renderBackButton()}
+        
     </Grid>);
 }
 export default CreateRoomPage;
