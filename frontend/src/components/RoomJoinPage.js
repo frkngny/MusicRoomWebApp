@@ -12,9 +12,11 @@ const RoomJoinPage = () => {
 
 
     function handleTextFieldChange(e) {
-        setState({
-            roomCode: e.target.value,
-            error: state.error,
+        setState((state) => {
+            return {
+                roomCode: e.target.value,
+                error: state.error
+            }
         });
     }
 
