@@ -37,6 +37,29 @@ const MusicPlayer = () => {
             });
         });
     }
+
+    function pauseSong() {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch('/spotify/pause-song', requestOptions);
+    }
+    function playSong() {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch('/spotify/play-song', requestOptions);
+    }
+    function skipSong() {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+        };
+        fetch('/spotify/skip-song', requestOptions);
+    }
+
     const props = state.song;
     const songProgress = (props.time / props.duration) * 100 ;
 
@@ -58,10 +81,11 @@ const MusicPlayer = () => {
                         { props.artist }
                     </Typography>
                     <div>
-                        <IconButton>
-                            {props.is_playing ? <Pause/> : <PlayArrow/>}
+                        <IconButton onClick={ () => { props.is_playing ? pauseSong() : playSong() } }>
+                            {props.is_playing ? <Pause /> : <PlayArrow/>}
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => skipSong()}>
+                            {props.votes} / {props.votes_required}
                             <SkipNext/>
                         </IconButton>
                     </div>
