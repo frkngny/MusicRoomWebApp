@@ -57,7 +57,7 @@ const HomePage = () => {
             <Routes>
                 <Route exact path='/' element={renderHomePage()}/>
                 <Route path='/join' element={<RoomJoinPage/>}/>
-                <Route path='/create' element={<CreateRoomPage/>}/>
+                <Route path='/create' element={<CreateRoomPage update={false} votesToSkip={2} guestCanPause={true}/>}/>
                 <Route path='/room/:roomCode' element={<Room/>} />
             </Routes>
         </Router>

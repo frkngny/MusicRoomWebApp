@@ -12,14 +12,22 @@ import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 
 
-const CreateRoomPage = () => {
+const CreateRoomPage = (props) => {
     const params = useParams();
     
     const [state, setState] = useState({
-        votesToSkip: 2,
-        guestCanPause: false,
+        votesToSkip: props.votesToSkip,
+        guestCanPause: props.guestCanPause,
     });
-    const [defaultVotes, setDefaultVotes] = useState(2);
+    const [defaultVotes, setDefaultVotes] = useState(props.votesToSkip);
+
+    /*useEffect(() => {
+        if(props.update){
+            setDefaultVotes(props.votesToSkip);
+            setState((state) => {state.votesToSkip= props.votesToSkip, state.guestCanPause= props.guestCanPause});
+        }
+    },[]);*/
+
     const navigate = useNavigate();
 
     function handleVotesChange(e) {
@@ -54,7 +62,7 @@ const CreateRoomPage = () => {
     return (<Grid container spacing={2} align="center">
         <Grid item xs={12}>
             <Typography component="h4" variant="h4">
-                Create a room.
+                {props.update ? "Update the room." : "Create a room."}
             </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -64,7 +72,7 @@ const CreateRoomPage = () => {
                         Guest Control of Playback State
                     </div>
                 </FormHelperText>
-                <RadioGroup row defaultValue="true" onChange={handleGuestCanPauseChange}>
+                <RadioGroup row defaultValue={""+state.guestCanPause} onChange={handleGuestCanPauseChange}>
                     <FormControlLabel value="true" control={<Radio color="primary" />} label="Play/Pause" labelPlacement="bottom" />
                     <FormControlLabel value="false" control={<Radio color="secondary" />} label="No Control" labelPlacement="bottom" />
                 </RadioGroup>
@@ -79,9 +87,9 @@ const CreateRoomPage = () => {
             </FormControl>
         </Grid>
         <Grid item xs={12}>
-            <Button color="primary" variant="contained" onClick={() => handleRoomButtonPressed()}>Create A Room</Button>
+            <Button color="primary" variant="contained" onClick={() => handleRoomButtonPressed()}>{props.update ? "Update" : "Create"}</Button>
         </Grid>
-        {params.update ? null : renderBackButton()}
+        {props.update ? null : renderBackButton()}
         
     </Grid>);
 }
