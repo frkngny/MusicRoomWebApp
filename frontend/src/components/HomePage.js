@@ -4,7 +4,7 @@ import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
 import Room from "./Room";
 import { Button, ButtonGroup, Grid, Typography } from "@material-ui/core";
-
+import InfoPage from "./InfoPage";
 
 const HomePage = () => {
     const params = useParams();
@@ -45,6 +45,7 @@ const HomePage = () => {
                     <ButtonGroup disableElevation variant="contained" color="primary">
                         <Button color="primary" variant="contained" to="/join" component={ Link }>Join A Room</Button>
                         <Button color="secondary" variant="contained" to="/create" component={ Link }>Create A Room</Button>
+                        <Button color="grey" variant="contained" to="/info" component={ Link }>Info</Button>
                     </ButtonGroup>
                 </Grid>
                 {roomCode ? renderJoinBack(roomCode) : null}
@@ -58,6 +59,7 @@ const HomePage = () => {
                 <Route exact path='/' element={renderHomePage()}/>
                 <Route path='/join' element={<RoomJoinPage/>}/>
                 <Route path='/create' element={<CreateRoomPage update={false} votesToSkip={2} guestCanPause={true}/>}/>
+                <Route path='/info' element={<InfoPage/>}/>
                 <Route path='/room/:roomCode' element={<Room/>} />
             </Routes>
         </Router>
